@@ -1,8 +1,9 @@
+"use server";
+
 import { storePost } from "@/lib/posts";
 import { redirect } from "next/navigation";
 
-export async function createPost(formData) {
-    "use server";
+export async function createPost(prevState, formData) {
     const title = formData.get("title");
     const image = formData.get("image");
     const content = formData.get("content");
@@ -17,7 +18,7 @@ export async function createPost(formData) {
       errors.push("content must be a valid content");
     }
 
-    if (image) {
+    if (!image || image.size === 0) {
       errors.push("image must be selected");
     }
 
